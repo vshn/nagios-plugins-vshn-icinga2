@@ -1,0 +1,5 @@
+PACKAGE (0.1.0) UNRELEASED; urgency=medium
+
+  * Initial release. (Closes: #XXXXXX)
+
+ -- Marco Fretz <marco.fretz@vshn.ch>  Fri, 19 Jan 2018 09:38:01 +0000

@@ -1,0 +1,6 @@
+/debian/superscript.*.debhelper
+/debian/superscript.*.log
+/debian/superscript.substvars
+/debian/superscript
+/debian/files
+/.pc

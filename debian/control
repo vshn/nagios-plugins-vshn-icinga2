@@ -1,0 +1,17 @@
+Source: nagios-plugins-redis
+Build-Depends: debhelper (>= 9.0.0)
+Standards-Version: 3.9.6.0
+Maintainer: Marco Fretz <marco.fretz@vshn.ch>
+Section: monitoring
+Priority: optional
+
+Package: nagios-plugins-vshn-icinga2
+Architecture: all
+Depends: ${misc:Depends},
+Description: nagios plugin to collect icinga2 stats via the API
+  - icinga2stats
+
+Package: nagios-plugins-vshn-icinga2-config
+Architecture: all
+Depends: ${misc:Depends}, nagios-plugins-common, icinga2
+Description: Icinga2 configs for nagios-plugins-vshn-icinga2
