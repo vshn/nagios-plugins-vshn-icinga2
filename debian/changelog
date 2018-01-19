@@ -1,0 +1,11 @@
+nagios-plugins-vshn-icinga2 (0.1.1) xenial; urgency=medium
+
+  * fix 
+
+ -- Marco Fretz <marco.fretz@vshn.ch>  Fri, 19 Jan 2018 09:58:15 +0000
+
+nagios-plugins-vshn-icinga2 (0.1.0) xenial; urgency=medium
+
+  * Initial release.
+
+ -- Marco Fretz <marco.fretz@vshn.ch>  Fri, 19 Jan 2018 09:40:30 +0000
