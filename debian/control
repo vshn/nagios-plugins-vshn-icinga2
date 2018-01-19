@@ -1,4 +1,4 @@
-Source: nagios-plugins-redis
+Source: nagios-plugins-vshn-icinga2
 Build-Depends: debhelper (>= 9.0.0)
 Standards-Version: 3.9.6.0
 Maintainer: Marco Fretz <marco.fretz@vshn.ch>
