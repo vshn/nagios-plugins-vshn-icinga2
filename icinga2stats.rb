@@ -34,7 +34,8 @@ datapoints = {
     'url' => '/v1/objects/hosts',
   },
   'num_hosts_down' => {
-    'filter' => 'host.state!=0 && host.downtime_depth==0 && host.acknowledgement==0 && host.vars.' + options[:managed_var].to_s + '!=false',
+    'filter' => 'host.state_type==1 && host.state!=0 && host.downtime_depth==0 && host.acknowledgement==0' +
+      '&& host.vars.' + options[:managed_var].to_s + '!=false',
     'url' => '/v1/objects/hosts',
   },
   'num_services_ok_filtered' => {
@@ -42,11 +43,13 @@ datapoints = {
     'url' => '/v1/objects/services',
   },
   'num_services_critical' => {
-    'filter' => 'service.state==2 && service.downtime_depth==0 && service.acknowledgement==0 && service.vars.' + options[:managed_var].to_s + '!=false',
+    'filter' => 'service.state_type==1 && service.state==2 && service.downtime_depth==0 && service.acknowledgement==0' +
+      '&& service.vars.' + options[:managed_var].to_s + '!=false',
     'url' => '/v1/objects/services',
   },
   'num_services_warning' => {
-    'filter' => 'service.state==1 && service.downtime_depth==0 && service.acknowledgement==0 && service.vars.' + options[:managed_var].to_s + '!=false',
+    'filter' => 'service.state_type==1 && service.state==1 && service.downtime_depth==0 && service.acknowledgement==0' +
+      '&& service.vars.' + options[:managed_var].to_s + '!=false',
     'url' => '/v1/objects/services',
   }
 }
