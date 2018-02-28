@@ -43,12 +43,12 @@ datapoints = {
     'url' => '/v1/objects/services',
   },
   'num_services_critical' => {
-    'filter' => 'service.state_type==1 && service.state==2 && service.downtime_depth==0 && service.acknowledgement==0' +
+    'filter' => 'service.state_type==1 && service.state==2 && service.downtime_depth==0 && service.acknowledgement==0 && host.state==0' +
       '&& service.vars.' + options[:managed_var].to_s + '!=false',
     'url' => '/v1/objects/services',
   },
   'num_services_warning' => {
-    'filter' => 'service.state_type==1 && service.state==1 && service.downtime_depth==0 && service.acknowledgement==0' +
+    'filter' => 'service.state_type==1 && service.state==1 && service.downtime_depth==0 && service.acknowledgement==0 && host.state==0' +
       '&& service.vars.' + options[:managed_var].to_s + '!=false',
     'url' => '/v1/objects/services',
   }
