@@ -1,3 +1,9 @@
+nagios-plugins-vshn-icinga2 (0.2.1) xenial; urgency=medium
+
+  * Filter services from down hosts 
+
+ -- Marco Fretz <marco.fretz@vshn.ch>  Wed, 28 Feb 2018 10:02:35 +0000
+
 nagios-plugins-vshn-icinga2 (0.2.0) xenial; urgency=medium
 
   * Only use hard states 
