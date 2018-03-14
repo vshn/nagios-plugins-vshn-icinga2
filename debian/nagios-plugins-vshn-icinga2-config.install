@@ -1,1 +1,1 @@
-icinga2stats.conf usr/share/icinga2/include/plugins-contrib.d
+*.conf usr/share/icinga2/include/plugins-contrib.d

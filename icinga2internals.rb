@@ -52,9 +52,9 @@ end
 
 def compare_metric(current, warn, crit, name)
   if current.round > crit
-    return { :code => 2, :text => name + ' NOT OK: ' + current.round.to_s + ' greater ' + crit.to_s }
+    return { :code => 2, :text => name + ' NOT OK: ' + current.round.to_s + ' > ' + crit.to_s }
   elsif current.round > warn
-    return { :code => 1, :text => name + ' NOT OK: ' + current.round.to_s + ' greater ' + warn.to_s }
+    return { :code => 1, :text => name + ' NOT OK: ' + current.round.to_s + ' > ' + warn.to_s }
   end
   return { :code => 0, :text => name + ' OK: ' + current.round.to_s }
 end

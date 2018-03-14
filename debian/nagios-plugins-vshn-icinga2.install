@@ -1,1 +1,1 @@
-icinga2stats.rb usr/lib/nagios/plugins
+*.rb usr/lib/nagios/plugins
