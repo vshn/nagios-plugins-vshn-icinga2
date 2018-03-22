@@ -9,10 +9,10 @@ options = {}
 results = {}
 states = { 0 => 'OK', 1 => 'WARNING', 2 => 'CRITICAL', 3 => 'UNKNOWN' }
 options[:port] = 5665
-options[:ido_warn] = 500
-options[:ido_crit] = 1000
-options[:influx_warn] = 500;
-options[:influx_crit] = 1000;
+options[:ido_warn] = 1000
+options[:ido_crit] = 2000
+options[:influx_warn] = 1000;
+options[:influx_crit] = 2000;
 
 OptionParser.new do |opts|
   opts.banner = "Usage: #{$0} [options]"
@@ -59,6 +59,14 @@ def compare_metric(current, warn, crit, name)
   return { :code => 0, :text => name + ' OK: ' + current.round.to_s }
 end
 
+def compare_bool(value, expected, name, notok_code)
+  if value != expected
+    return { :code => notok_code, :text => name + ' NOT OK: ' + value.to_s }
+  else
+    return { :code => 0, :text => name + ' OK: ' + value.to_s }
+  end
+end
+
 header = {
   "Accept" => "application/json",
   "X-HTTP-Method-Override" => "GET"
@@ -81,8 +89,8 @@ begin
     results['influx_work_queue_items'] = compare_metric(influx_status['work_queue_items'], options[:influx_warn], options[:influx_crit], 'influx_work_queue_items')
   end
   ido_status = get_status_values(status_object, 'IdoMysqlConnection', 'idomysqlconnection')
-  app_status = get_status_values(status_object, 'IcingaApplication', 'icingaapplication')
-  # status for ApiListener uses a different format / does not has multiple instances
+  # api and app have a different structure
+  app_status = status_object['results'].select {|key| key['name'] == 'IcingaApplication'}[0]['status']['icingaapplication']['app']
   api_status = status_object['results'].select {|key| key['name'] == 'ApiListener'}[0]['status']['api']
 
   results['ido_query_queue_items'] = compare_metric(ido_status['query_queue_items'], options[:ido_warn], options[:ido_crit], 'ido_query_queue_items')
@@ -94,6 +102,9 @@ begin
     'num_not_conn_endpoints'
   )
 
+  results['enable_notifications'] = compare_bool(app_status['enable_notifications'], true, 'enable_notifications', 2)
+  results['enable_service_checks'] = compare_bool(app_status['enable_service_checks'], true, 'enable_service_checks', 2)
+
   final_code = results.values.map { |i| i[:code] }.max
   if final_code == 0
     puts 'OK: ' + results.map{|k, v| v[:text]}.join(', ')
@@ -104,4 +115,5 @@ rescue
    puts "UNKNOWN: Exception in #{$0}"
    exit 3
 end
+
 exit final_code
