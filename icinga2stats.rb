@@ -74,6 +74,7 @@ begin
     response = http.request(request)
     output = JSON.parse(response.body)
     results[key] = output['results'].length
+    sleep(2)
   end
 
   # get okay services the quick way (all ok minus filtered)
@@ -93,6 +94,6 @@ begin
   puts 'OK: Stats collected |' + perf_data.join(' ')
   exit 0
 rescue
-  puts 'UNKNOWN: An error occured, please run the check manually to see what it wrong'
+  puts 'UNKNOWN: An error occured, please run the check manually to see what went wrong'
   exit 3
 end
