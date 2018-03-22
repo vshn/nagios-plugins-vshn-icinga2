@@ -4,6 +4,38 @@ Currently the checks are written in Ruby and are proof-of-concept quality at bes
 
 The idea is to rewrite the scripts in Python or Go and using a Icinga2 API library.
 
+## `late_check_results`
+### Examples
+```
+apply Service "late_check_results_per_host" to Host {
+  import "generic-service"
+  display_name = "icinga2 late check results"
+  assign where !host.vars.ignore_service_icinga
+  check_command = "late_check_results"
+  check_interval = 1h
+  max_check_attempts = 1
+  retry_interval = 5m
+  enable_notifications = true
+  zone = "master"
+}
+```
+## `testalert`
+```
+apply Service "testalert" {
+  import "generic-service"
+  display_name = "Test Notification"
+  check_command = "testalert"
+  check_interval = 1m
+  max_check_attempts = 1
+  enable_notifications = true
+  assign where host.vars.testalert
+
+  vars.hour = "15"
+  vars.weekday = "Thursday"
+  vars.interval = 60
+}
+```
+
 ## `icinga2internals`
 
 Checks some Icinga2 internal metrics for IDO, InfluxdbWriter, number of API endpoints, etc. As the check just uses the API, it can also check remote icinga2 instances.
