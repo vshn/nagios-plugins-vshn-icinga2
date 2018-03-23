@@ -1,6 +1,6 @@
 # nagios-plugins-vshn-icinga2
 
-Currently the checks are written in Ruby and are proof-of-concept quality at best. Input validation and exception handling is very basic or not existing. Use at own risk!
+Currently the checks which are not written directly in Icinga Language are written in Ruby and are proof-of-concept quality at best. Input validation and exception handling is very basic or not existing. Use at own risk!
 
 The idea is to rewrite the scripts in Python or Go and using a Icinga2 API library.
 
