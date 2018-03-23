@@ -47,10 +47,10 @@ Usage: ./icinga2internals.rb [options]
     -P, --port=port
     -u, --user=username
     -p, --password=password
-    -w, --idowarn=value # default: 500
-    -c, --idocrit=value # default: 1000
-    -g, --influxwarn=value # default: 500
-    -s, --influxcrit=value # default: 1000
+    -w, --idowarn=value # default: 1000
+    -c, --idocrit=value # default: 2000
+    -g, --influxwarn=value # default: 1000
+    -s, --influxcrit=value # default: 2000
 ```
 ### Example
 ```
@@ -63,6 +63,9 @@ OK: ido_query_queue_items OK: 0, ido_query_queue_item_rate OK: 630, influx_data_
 ```
 CRITICAL: influx_data_buffer_items NOT OK: 1014 greater 1000
 ```
+
+## `icinga2internals_heartbeat`
+This is a wrapper checkcommand around `icinga2internals` combined with `submit_remote`. See example setup below.
 
 ## `submit_remote`
 
@@ -89,9 +92,10 @@ This one checks the icinga2 internals (see above) and forwards the results to a 
 ## Example Icinga2 config
 service on the remote icinga2 with "heartbeat" / freshness check:
 ```
-object Service "icinga2_test.remote.vagrant.dev" {
+object Service "icinga2_heartbeat" {
   check_command = "dummy"
-  check_interval = 10s
+  display_name = "Icinga2 internals (heartbeat from icinga-server.vagrant.dev)"
+  check_interval = 30s
 
   /* Set the state to UNKNOWN (3) if freshness checks fail. */
   vars.dummy_state = 2
@@ -110,15 +114,17 @@ object Service "icinga2_test.remote.vagrant.dev" {
 local check:
 ```
 object Service "icinga2internals" {
-  check_command = "submit_remote"
+  check_command = "icinga2_internals_heartbeat"
   check_interval = 20s
-  display_name = "Icinga2 internal metrics"
+  display_name = "Icinga2 internals"
 
   vars.submit_remote_host = "localhost"
-  vars.submit_remote_user = "user"
-  vars.submit_remote_password = "pass"
-  vars.submit_remote_remoteservice = "icinga-server.vagrant.dev!icinga2_test.remote.vagrant.dev"
-  vars.submit_remote_command = PluginDir + "/icinga2internals.rb -H localhost -u <local user> -p <local pass>
+  vars.submit_remote_user = "submit_remote"
+  vars.submit_remote_password = "welcome"
+  vars.submit_remote_remoteservice = "icinga-server.vagrant.dev!icinga2_heartbeat"
+
+  vars.icinga2internals_user = "status"
+  vars.icinga2internals_password = "welcome"
 
   host_name = "icinga-server.vagrant.dev"
 }
